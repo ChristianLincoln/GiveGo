@@ -29,7 +29,7 @@ const collectCoinSchema = z.object({
 });
 
 const checkoutSchema = z.object({
-  coinValue: z.number().min(50).max(500),
+  coinValue: z.number().min(10).max(500),
   quantity: z.number().min(1).max(1000),
 });
 

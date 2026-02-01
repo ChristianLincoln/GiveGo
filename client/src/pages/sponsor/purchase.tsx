@@ -17,12 +17,12 @@ import {
 } from "lucide-react";
 
 const COIN_OPTIONS = [
-  { value: 10, label: "10p", popular: false },
-  { value: 20, label: "20p", popular: false },
-  { value: 50, label: "50p", popular: true },
-  { value: 100, label: "£1", popular: false },
-  { value: 200, label: "£2", popular: false },
-  { value: 500, label: "£5", popular: false },
+  { value: 10, label: "10p" },
+  { value: 20, label: "20p" },
+  { value: 50, label: "50p" },
+  { value: 100, label: "£1" },
+  { value: 200, label: "£2" },
+  { value: 500, label: "£5" },
 ];
 
 const QUANTITY_PRESETS = [10, 25, 50, 100];
@@ -105,9 +105,6 @@ export default function SponsorPurchase() {
                     }`}
                     data-testid={`button-value-${option.value}`}
                   >
-                    {option.popular && (
-                      <Badge className="absolute -top-2 -right-2 text-xs">Popular</Badge>
-                    )}
                     <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-2">
                       <Heart className="w-6 h-6 text-accent-foreground" />
                     </div>
