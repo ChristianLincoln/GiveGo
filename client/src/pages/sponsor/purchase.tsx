@@ -17,8 +17,10 @@ import {
 } from "lucide-react";
 
 const COIN_OPTIONS = [
-  { value: 50, label: "50p", popular: false },
-  { value: 100, label: "£1", popular: true },
+  { value: 10, label: "10p", popular: false },
+  { value: 20, label: "20p", popular: false },
+  { value: 50, label: "50p", popular: true },
+  { value: 100, label: "£1", popular: false },
   { value: 200, label: "£2", popular: false },
   { value: 500, label: "£5", popular: false },
 ];
@@ -28,7 +30,7 @@ const QUANTITY_PRESETS = [10, 25, 50, 100];
 export default function SponsorPurchase() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const [selectedValue, setSelectedValue] = useState(100);
+  const [selectedValue, setSelectedValue] = useState(50);
   const [quantity, setQuantity] = useState(10);
 
   const totalAmount = selectedValue * quantity;
@@ -91,7 +93,7 @@ export default function SponsorPurchase() {
               <p className="text-sm text-muted-foreground mb-4">
                 Each heart represents a donation amount when collected by a player.
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                 {COIN_OPTIONS.map((option) => (
                   <button
                     key={option.value}

@@ -274,7 +274,7 @@ export default function PlayerSession() {
       </div>
 
       {/* Session Stats */}
-      <div className="p-4 max-w-4xl mx-auto">
+      <div className="p-4 pb-24 max-w-4xl mx-auto">
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="p-4 text-center">
             <Heart className="w-8 h-8 text-primary mx-auto mb-2" />
