@@ -44,6 +44,7 @@ export function CoinMap({
   const userCircleRef = useRef<L.Circle | null>(null);
   const routeLineRef = useRef<L.Polyline | null>(null);
   const walkingMarkersRef = useRef<L.Marker[]>([]);
+  const hasInitialZoomRef = useRef(false);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -105,7 +106,6 @@ export function CoinMap({
       ).addTo(mapRef.current);
     }
 
-    mapRef.current.setView([userPosition.latitude, userPosition.longitude], mapRef.current.getZoom());
   }, [userPosition, collectionRadius]);
 
   useEffect(() => {
@@ -152,12 +152,13 @@ export function CoinMap({
       coinMarkersRef.current.push(marker);
     });
 
-    if (activeCoins.length > 0 && userMarkerRef.current) {
+    if (activeCoins.length > 0 && userMarkerRef.current && !hasInitialZoomRef.current) {
       const bounds = L.latLngBounds([
         [userPosition.latitude, userPosition.longitude],
         ...activeCoins.map((c) => [c.latitude, c.longitude] as [number, number]),
       ]);
       mapRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+      hasInitialZoomRef.current = true;
     }
 
     // Clear previous route
