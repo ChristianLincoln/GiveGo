@@ -90,11 +90,12 @@ Key database tables:
 
 ### Interactive Map
 - Built with Leaflet and OpenStreetMap tiles
-- User location marker with primary color
+- User location marker with pulsing animation
 - Collection radius circle (10m) around user
-- Gold coin markers with accent color glow animation
-- Popup info with coin value and collection prompt
-- Auto-zoom to fit user and all coins in view
+- Heart-shaped markers with bounce animation and value labels
+- Walking route visualization to nearest heart with distance indicator
+- Popup info with heart value and collection prompt
+- Auto-zoom to fit user and all hearts in view
 - Theme-aware CSS variables for light/dark mode compatibility
 
 ## External Dependencies
@@ -121,6 +122,16 @@ Key database tables:
 - Stripe credentials are fetched dynamically via Replit connectors
 
 ## Recent Changes
+
+**Feb 2026 - Branding & Route Updates**
+- Generated new heart logo image used across all pages (landing, app header, role selection)
+- Updated favicon and all PWA icons to red heart logo
+- Added walking route visualization from user to nearest heart on map (dashed line with distance label)
+- Added British Heart Foundation charity link in settings page (https://www.bhf.org.uk/)
+- Updated version number to 1.1.0
+- Terminology rebrand from "coins" to "hearts" across all user-facing elements
+- Added 10p and 20p heart purchase options (6 total: 10p, 20p, 50p, £1, £2, £5)
+- Fixed backend validation to accept minimum 10p heart values
 
 **Feb 2026 - Map & Theme Updates**
 - Changed theme from emerald green to heart red (#dc2644) for British Heart Foundation branding
