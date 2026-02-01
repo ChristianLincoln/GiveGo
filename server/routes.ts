@@ -276,11 +276,7 @@ export async function registerRoutes(
       const coinCount = Math.floor(Math.random() * 10) + 1;
       const coinsToPlace = await storage.getRandomAvailableCoinsFromInventory(coinCount);
 
-      if (coinsToPlace.length === 0) {
-        return res.status(400).json({ message: "No coins available right now" });
-      }
-
-      // Create session
+      // Create session even if no coins available (UI will show friendly message)
       const session = await storage.createSession({
         playerId: profile.id,
         status: "active",
@@ -327,7 +323,10 @@ export async function registerRoutes(
       }
 
       const coins = await storage.getActiveCoinsForSession(session.id);
-      res.json({ session, coins });
+      const message = coins.length === 0 
+        ? "No coins are available right now. Sponsors haven't placed any coins yet." 
+        : undefined;
+      res.json({ session, coins, message });
     } catch (error) {
       console.error("Error starting session:", error);
       res.status(500).json({ message: "Failed to start session" });

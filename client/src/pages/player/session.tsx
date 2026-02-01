@@ -20,11 +20,12 @@ import {
   Loader2,
   ArrowLeft
 } from "lucide-react";
-import type { Session, GeneratedCoin } from "@shared/schema";
+import type { PlayerSession, GeneratedCoin } from "@shared/schema";
 
 interface SessionData {
-  session: Session;
+  session: PlayerSession;
   coins: GeneratedCoin[];
+  message?: string;
 }
 
 const COLLECTION_RADIUS_METERS = 10;
@@ -34,6 +35,8 @@ export default function PlayerSession() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [collectingCoinId, setCollectingCoinId] = useState<string | null>(null);
+  const [sessionStartAttempted, setSessionStartAttempted] = useState(false);
+  const [sessionStartError, setSessionStartError] = useState<string | null>(null);
 
   const { position, error: geoError, isLoading: geoLoading, isSupported } = useGeolocation({
     watch: true,
@@ -54,12 +57,26 @@ export default function PlayerSession() {
       });
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["/api/player/session/active"] });
-      toast({ title: "Session started!", description: "Find and collect coins near you." });
+      setSessionStartAttempted(true);
+      if (data.message) {
+        toast({ title: "Session started", description: data.message });
+      } else {
+        toast({ title: "Session started!", description: "Find and collect coins near you." });
+      }
     },
     onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      setSessionStartAttempted(true);
+      setSessionStartError(error.message);
+      if (error.message.includes("No coins available")) {
+        toast({ 
+          title: "No coins available right now", 
+          description: "Sponsors haven't placed any coins yet. Check back later!", 
+        });
+      } else {
+        toast({ title: "Error", description: error.message, variant: "destructive" });
+      }
     },
   });
 
@@ -104,12 +121,13 @@ export default function PlayerSession() {
     },
   });
 
-  // Auto-start session if none exists
+  // Auto-start session if none exists (only once)
   useEffect(() => {
-    if (!sessionLoading && !sessionData?.session && position && !startSession.isPending) {
+    if (!sessionLoading && !sessionData?.session && position && !startSession.isPending && !sessionStartAttempted) {
+      setSessionStartAttempted(true);
       startSession.mutate();
     }
-  }, [sessionLoading, sessionData, position, startSession]);
+  }, [sessionLoading, sessionData, position, startSession, sessionStartAttempted]);
 
   const handleCollectCoin = useCallback((coin: GeneratedCoin) => {
     if (!position) return;
@@ -161,6 +179,34 @@ export default function PlayerSession() {
           <p className="text-muted-foreground mb-6">{geoError.message}</p>
           <div className="space-y-2">
             <Button onClick={() => window.location.reload()} className="w-full">
+              Try Again
+            </Button>
+            <Button onClick={() => navigate("/player")} variant="outline" className="w-full">
+              Go Back
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show error state if session start failed
+  if (sessionStartError && !sessionData?.session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="p-8 max-w-md w-full text-center">
+          <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <h2 className="font-display text-xl font-bold mb-2">Session Couldn't Start</h2>
+          <p className="text-muted-foreground mb-6">
+            {sessionStartError.includes("No coins") || sessionStartError.includes("coins")
+              ? "No coins are available right now. Sponsors haven't placed any coins yet."
+              : sessionStartError}
+          </p>
+          <div className="space-y-2">
+            <Button onClick={() => {
+              setSessionStartAttempted(false);
+              setSessionStartError(null);
+            }} className="w-full">
               Try Again
             </Button>
             <Button onClick={() => navigate("/player")} variant="outline" className="w-full">
@@ -365,7 +411,7 @@ export default function PlayerSession() {
                 );
               })}
 
-            {activeCoinCount === 0 && (
+            {activeCoinCount === 0 && coins.length > 0 && (
               <div className="text-center py-8">
                 <CheckCircle className="w-12 h-12 text-primary mx-auto mb-2" />
                 <p className="font-medium">All coins collected!</p>
@@ -374,6 +420,19 @@ export default function PlayerSession() {
                 </p>
                 <Button onClick={() => endSession.mutate()} data-testid="button-finish-session">
                   Finish Session
+                </Button>
+              </div>
+            )}
+
+            {activeCoinCount === 0 && coins.length === 0 && (
+              <div className="text-center py-8">
+                <Coins className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                <p className="font-medium">No coins available right now</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Sponsors haven't placed any coins in your area yet. Check back later or try a different location!
+                </p>
+                <Button onClick={() => endSession.mutate()} variant="outline" data-testid="button-end-empty-session">
+                  End Session
                 </Button>
               </div>
             )}

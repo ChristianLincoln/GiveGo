@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE - Give Go Green/Emerald Theme */
+/* LIGHT MODE - Give Go Heart Red Theme (British Heart Foundation) */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -10,35 +10,35 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
   --background: 0 0% 100%;
-  --foreground: 160 10% 10%;
-  --border: 160 10% 90%;
-  --card: 160 10% 98%;
-  --card-foreground: 160 10% 10%;
-  --card-border: 160 10% 92%;
-  --sidebar: 160 15% 96%;
-  --sidebar-foreground: 160 10% 10%;
-  --sidebar-border: 160 10% 90%;
-  --sidebar-primary: 160 84% 39%;
+  --foreground: 0 10% 10%;
+  --border: 0 10% 90%;
+  --card: 0 10% 98%;
+  --card-foreground: 0 10% 10%;
+  --card-border: 0 10% 92%;
+  --sidebar: 0 15% 96%;
+  --sidebar-foreground: 0 10% 10%;
+  --sidebar-border: 0 10% 90%;
+  --sidebar-primary: 350 84% 50%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 160 20% 92%;
-  --sidebar-accent-foreground: 160 10% 15%;
-  --sidebar-ring: 160 84% 39%;
-  --popover: 160 10% 98%;
-  --popover-foreground: 160 10% 10%;
-  --popover-border: 160 10% 88%;
-  --primary: 160 84% 39%;
+  --sidebar-accent: 0 20% 92%;
+  --sidebar-accent-foreground: 0 10% 15%;
+  --sidebar-ring: 350 84% 50%;
+  --popover: 0 10% 98%;
+  --popover-foreground: 0 10% 10%;
+  --popover-border: 0 10% 88%;
+  --primary: 350 84% 50%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 160 15% 92%;
-  --secondary-foreground: 160 20% 20%;
-  --muted: 160 10% 90%;
-  --muted-foreground: 160 10% 40%;
+  --secondary: 0 15% 92%;
+  --secondary-foreground: 0 20% 20%;
+  --muted: 0 10% 90%;
+  --muted-foreground: 0 10% 40%;
   --accent: 45 93% 47%;
   --accent-foreground: 45 100% 10%;
   --destructive: 0 84% 50%;
   --destructive-foreground: 0 0% 100%;
-  --input: 160 10% 85%;
-  --ring: 160 84% 39%;
-  --chart-1: 160 84% 39%;
+  --input: 0 10% 85%;
+  --ring: 350 84% 50%;
+  --chart-1: 350 84% 50%;
   --chart-2: 45 93% 47%;
   --chart-3: 200 85% 45%;
   --chart-4: 280 70% 50%;
@@ -74,43 +74,43 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
-/* DARK MODE */
+/* DARK MODE - Heart Red Theme */
 .dark {
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);
   --opaque-button-border-intensity: 9;
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
-  --background: 160 10% 6%;
-  --foreground: 160 10% 96%;
-  --border: 160 10% 15%;
-  --card: 160 10% 9%;
-  --card-foreground: 160 10% 96%;
-  --card-border: 160 10% 13%;
-  --sidebar: 160 10% 8%;
-  --sidebar-foreground: 160 10% 96%;
-  --sidebar-border: 160 10% 14%;
-  --sidebar-primary: 160 84% 45%;
+  --background: 0 10% 6%;
+  --foreground: 0 10% 96%;
+  --border: 0 10% 15%;
+  --card: 0 10% 9%;
+  --card-foreground: 0 10% 96%;
+  --card-border: 0 10% 13%;
+  --sidebar: 0 10% 8%;
+  --sidebar-foreground: 0 10% 96%;
+  --sidebar-border: 0 10% 14%;
+  --sidebar-primary: 350 84% 55%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 160 15% 16%;
-  --sidebar-accent-foreground: 160 10% 90%;
-  --sidebar-ring: 160 84% 45%;
-  --popover: 160 10% 10%;
-  --popover-foreground: 160 10% 96%;
-  --popover-border: 160 10% 16%;
-  --primary: 160 84% 45%;
+  --sidebar-accent: 0 15% 16%;
+  --sidebar-accent-foreground: 0 10% 90%;
+  --sidebar-ring: 350 84% 55%;
+  --popover: 0 10% 10%;
+  --popover-foreground: 0 10% 96%;
+  --popover-border: 0 10% 16%;
+  --primary: 350 84% 55%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 160 10% 18%;
-  --secondary-foreground: 160 10% 90%;
-  --muted: 160 10% 20%;
-  --muted-foreground: 160 10% 60%;
+  --secondary: 0 10% 18%;
+  --secondary-foreground: 0 10% 90%;
+  --muted: 0 10% 20%;
+  --muted-foreground: 0 10% 60%;
   --accent: 45 93% 55%;
   --accent-foreground: 45 100% 10%;
   --destructive: 0 84% 55%;
   --destructive-foreground: 0 0% 100%;
-  --input: 160 10% 22%;
-  --ring: 160 84% 45%;
-  --chart-1: 160 84% 55%;
+  --input: 0 10% 22%;
+  --ring: 350 84% 55%;
+  --chart-1: 350 84% 55%;
   --chart-2: 45 93% 60%;
   --chart-3: 200 85% 55%;
   --chart-4: 280 70% 60%;
@@ -220,13 +220,13 @@
     inset: -1px;
   }
 
-  /* Coin glow animation */
+  /* Coin glow animation - Heart Red */
   @keyframes coin-pulse {
     0%, 100% {
-      box-shadow: 0 0 20px 5px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 20px 5px rgba(220, 38, 68, 0.3);
     }
     50% {
-      box-shadow: 0 0 30px 10px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 30px 10px rgba(220, 38, 68, 0.5);
     }
   }
 
