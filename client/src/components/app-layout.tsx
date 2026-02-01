@@ -52,11 +52,9 @@ export function AppLayout({ children, currentRole }: AppLayoutProps) {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="flex items-center justify-between p-3 max-w-6xl mx-auto">
           <div className="flex items-center gap-2">
-            <img 
-              src="/icons/heart-logo.png" 
-              alt="Give Go Logo" 
-              className="w-8 h-8 rounded-lg object-cover"
-            />
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Heart className="w-4 h-4 text-primary-foreground" />
+            </div>
             <span className="font-display font-bold text-lg">Give Go</span>
           </div>
           
