@@ -5,7 +5,7 @@ import {
   sponsorProfiles,
   coinInventory,
   generatedCoins,
-  sessions,
+  playerSessions,
   escrow,
   collectionHistory,
   userRoles,
@@ -17,8 +17,8 @@ import {
   type InsertCoinInventory,
   type GeneratedCoin,
   type InsertGeneratedCoin,
-  type Session,
-  type InsertSession,
+  type PlayerSession,
+  type InsertPlayerSession,
   type Escrow,
   type InsertEscrow,
   type CollectionHistory,
@@ -66,10 +66,10 @@ export interface IStorage {
   getExpiredCoins(): Promise<GeneratedCoin[]>;
   getRandomAvailableCoinsFromInventory(count: number): Promise<{ sponsorId: string; coinValue: number }[]>;
 
-  // Sessions
-  getActiveSession(playerId: string): Promise<Session | undefined>;
-  createSession(data: InsertSession): Promise<Session>;
-  updateSession(id: string, data: Partial<Session>): Promise<void>;
+  // Player Sessions
+  getActiveSession(playerId: string): Promise<PlayerSession | undefined>;
+  createSession(data: InsertPlayerSession): Promise<PlayerSession>;
+  updateSession(id: string, data: Partial<PlayerSession>): Promise<void>;
   endSession(id: string, status: "completed" | "abandoned"): Promise<void>;
 
   // Escrow
@@ -333,29 +333,29 @@ export class DatabaseStorage implements IStorage {
     return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
-  // Sessions
-  async getActiveSession(playerId: string): Promise<Session | undefined> {
+  // Player Sessions
+  async getActiveSession(playerId: string): Promise<PlayerSession | undefined> {
     const [session] = await db
       .select()
-      .from(sessions)
-      .where(and(eq(sessions.playerId, playerId), eq(sessions.status, "active")));
+      .from(playerSessions)
+      .where(and(eq(playerSessions.playerId, playerId), eq(playerSessions.status, "active")));
     return session;
   }
 
-  async createSession(data: InsertSession): Promise<Session> {
-    const [session] = await db.insert(sessions).values(data).returning();
+  async createSession(data: InsertPlayerSession): Promise<PlayerSession> {
+    const [session] = await db.insert(playerSessions).values(data).returning();
     return session;
   }
 
-  async updateSession(id: string, data: Partial<Session>): Promise<void> {
-    await db.update(sessions).set(data).where(eq(sessions.id, id));
+  async updateSession(id: string, data: Partial<PlayerSession>): Promise<void> {
+    await db.update(playerSessions).set(data).where(eq(playerSessions.id, id));
   }
 
   async endSession(id: string, status: "completed" | "abandoned"): Promise<void> {
     await db
-      .update(sessions)
+      .update(playerSessions)
       .set({ status, endedAt: new Date() })
-      .where(eq(sessions.id, id));
+      .where(eq(playerSessions.id, id));
   }
 
   // Escrow

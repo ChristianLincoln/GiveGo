@@ -58,8 +58,8 @@ export const generatedCoins = pgTable("generated_coins", {
   collectedBy: varchar("collected_by"),
 });
 
-// Player sessions
-export const sessions = pgTable("player_sessions", {
+// Player game sessions (renamed to avoid conflict with auth sessions)
+export const playerSessions = pgTable("player_sessions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   playerId: varchar("player_id").notNull(),
   status: sessionStatusEnum("status").default("active").notNull(),
@@ -107,7 +107,7 @@ export const insertPlayerProfileSchema = createInsertSchema(playerProfiles).omit
 export const insertSponsorProfileSchema = createInsertSchema(sponsorProfiles).omit({ id: true, createdAt: true });
 export const insertCoinInventorySchema = createInsertSchema(coinInventory).omit({ id: true, createdAt: true });
 export const insertGeneratedCoinSchema = createInsertSchema(generatedCoins).omit({ id: true, placedAt: true });
-export const insertSessionSchema = createInsertSchema(sessions).omit({ id: true, startedAt: true });
+export const insertPlayerSessionSchema = createInsertSchema(playerSessions).omit({ id: true, startedAt: true });
 export const insertEscrowSchema = createInsertSchema(escrow).omit({ id: true, createdAt: true });
 export const insertCollectionHistorySchema = createInsertSchema(collectionHistory).omit({ id: true, collectedAt: true });
 export const insertUserRoleSchema = createInsertSchema(userRoles).omit({ id: true });
@@ -121,8 +121,8 @@ export type CoinInventory = typeof coinInventory.$inferSelect;
 export type InsertCoinInventory = z.infer<typeof insertCoinInventorySchema>;
 export type GeneratedCoin = typeof generatedCoins.$inferSelect;
 export type InsertGeneratedCoin = z.infer<typeof insertGeneratedCoinSchema>;
-export type Session = typeof sessions.$inferSelect;
-export type InsertSession = z.infer<typeof insertSessionSchema>;
+export type PlayerSession = typeof playerSessions.$inferSelect;
+export type InsertPlayerSession = z.infer<typeof insertPlayerSessionSchema>;
 export type Escrow = typeof escrow.$inferSelect;
 export type InsertEscrow = z.infer<typeof insertEscrowSchema>;
 export type CollectionHistory = typeof collectionHistory.$inferSelect;
