@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SponsorMap } from "@/components/SponsorMap";
 import { 
   MapPin, 
   CheckCircle, 
   Clock, 
   Package,
-  Filter
+  Heart
 } from "lucide-react";
 import type { GeneratedCoin } from "@shared/schema";
 
@@ -80,37 +80,49 @@ export default function SponsorTracking() {
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-4xl mx-auto">
-      <div>
-        <h1 className="font-display text-2xl font-bold mb-2">Coin Tracking</h1>
-        <p className="text-muted-foreground">Track the status of your coins in real-time</p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+          <Heart className="w-5 h-5 text-primary" />
+        </div>
+        <div>
+          <h1 className="font-display text-2xl font-bold">Heart Coin Tracking</h1>
+          <p className="text-muted-foreground text-sm">Track your donations to the British Heart Foundation</p>
+        </div>
       </div>
 
-      {/* Map Placeholder */}
+      {/* Interactive Map */}
       <Card className="overflow-hidden">
-        <div className="bg-muted aspect-video relative flex items-center justify-center">
-          <div className="text-center text-muted-foreground">
-            <MapPin className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>Map view coming soon</p>
-            <p className="text-xs">Your coins will appear here on a real map</p>
+        <div className="p-4 border-b border-border flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-primary" />
+            <span className="font-medium">Live Coin Map</span>
           </div>
-          
-          {/* Simplified coin markers for demo */}
-          {filteredCoins
-            .filter((c) => c.status === "placed")
-            .slice(0, 5)
-            .map((coin, i) => (
-              <div
-                key={coin.id}
-                className="absolute w-8 h-8 bg-accent rounded-full flex items-center justify-center gold-glow"
-                style={{
-                  left: `${20 + i * 15}%`,
-                  top: `${30 + (i % 2) * 20}%`,
-                }}
-              >
-                <MapPin className="w-4 h-4 text-accent-foreground" />
-              </div>
-            ))}
+          <div className="flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-1">
+              <div className="w-3 h-3 rounded-full bg-primary"></div>
+              <span>Active</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <span>Collected</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-3 h-3 rounded-full bg-gray-400"></div>
+              <span>Expired</span>
+            </div>
+          </div>
         </div>
+        {filteredCoins.length > 0 ? (
+          <SponsorMap coins={filteredCoins} />
+        ) : (
+          <div className="bg-muted aspect-video relative flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              <Heart className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p>No coins to display</p>
+              <p className="text-xs">Purchase coins and they'll appear here when placed</p>
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Filters */}

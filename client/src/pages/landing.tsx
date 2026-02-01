@@ -12,7 +12,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
-              <Coins className="w-5 h-5 text-primary-foreground" />
+              <Heart className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="font-display font-bold text-xl">Give Go</span>
           </div>
@@ -278,14 +278,20 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-20 px-4 bg-primary/5">
         <div className="max-w-3xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+              <Heart className="w-8 h-8 text-primary" />
+            </div>
+          </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-            Ready to make a difference?
+            Ready to help save lives?
           </h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            Join thousands of players and sponsors creating positive change, one coin at a time.
+            Join thousands of players and sponsors supporting the British Heart Foundation's life-saving research.
           </p>
           <Button size="lg" asChild className="gap-2" data-testid="button-cta-join">
             <a href="/api/login">
+              <Heart className="w-4 h-4" />
               Join Give Go
               <ArrowRight className="w-4 h-4" />
             </a>
@@ -298,13 +304,14 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Coins className="w-4 h-4 text-primary-foreground" />
+              <Heart className="w-4 h-4 text-primary-foreground" />
             </div>
             <span className="font-display font-semibold">Give Go</span>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Supporting the British Heart Foundation
-          </p>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Heart className="w-4 h-4 text-primary" />
+            <span>Proudly supporting the British Heart Foundation</span>
+          </div>
         </div>
       </footer>
     </div>

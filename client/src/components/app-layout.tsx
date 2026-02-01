@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { 
-  Coins, 
+  Heart,
   Home, 
   MapPin, 
   History, 
@@ -53,7 +53,7 @@ export function AppLayout({ children, currentRole }: AppLayoutProps) {
         <div className="flex items-center justify-between p-3 max-w-6xl mx-auto">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Coins className="w-4 h-4 text-primary-foreground" />
+              <Heart className="w-4 h-4 text-primary-foreground" />
             </div>
             <span className="font-display font-bold text-lg">Give Go</span>
           </div>

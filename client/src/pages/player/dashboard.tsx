@@ -14,7 +14,7 @@ import {
   ChevronDown,
   Minus
 } from "lucide-react";
-import type { PlayerProfile, Session } from "@shared/schema";
+import type { PlayerProfile, PlayerSession } from "@shared/schema";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 interface LeaderboardEntry {
@@ -29,7 +29,7 @@ interface PlayerStats {
   profile: PlayerProfile;
   leaderboard: LeaderboardEntry[];
   history: { date: string; coins: number; donated: number }[];
-  activeSession: Session | null;
+  activeSession: PlayerSession | null;
   coinsAvailable: boolean;
 }
 
@@ -237,15 +237,20 @@ export default function PlayerDashboard() {
       </div>
 
       {/* Start Session CTA */}
-      <Card className="p-6">
+      <Card className="p-6 bg-gradient-to-r from-primary/5 to-destructive/5">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
-            <h3 className="font-display text-xl font-bold mb-1">Ready to Collect?</h3>
-            <p className="text-muted-foreground">
-              {stats.coinsAvailable
-                ? "Coins are available near you. Start a session to begin collecting!"
-                : "No coins available right now. Please check back later."}
-            </p>
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+              <Heart className="w-6 h-6 text-primary" />
+            </div>
+            <div className="text-center sm:text-left">
+              <h3 className="font-display text-xl font-bold mb-1">Ready to Help Hearts?</h3>
+              <p className="text-muted-foreground">
+                {stats.coinsAvailable
+                  ? "Heart coins are waiting! Each one you collect helps the British Heart Foundation."
+                  : "No coins available right now. Please check back later."}
+              </p>
+            </div>
           </div>
           {stats.activeSession ? (
             <Button asChild size="lg" className="gap-2" data-testid="button-continue-session">

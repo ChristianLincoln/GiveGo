@@ -161,17 +161,20 @@ export default function SponsorPurchase() {
             </Card>
 
             {/* How it works */}
-            <Card className="p-6 bg-muted/50">
-              <h3 className="font-semibold mb-4">How it works</h3>
+            <Card className="p-6 bg-gradient-to-r from-primary/5 to-accent/5">
+              <div className="flex items-center gap-2 mb-4">
+                <Heart className="w-5 h-5 text-primary" />
+                <h3 className="font-semibold">How Your Donation Helps</h3>
+              </div>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shrink-0 text-primary-foreground font-bold text-sm">
                     1
                   </div>
                   <div>
-                    <p className="font-medium">Purchase Coins</p>
+                    <p className="font-medium">Purchase Heart Coins</p>
                     <p className="text-sm text-muted-foreground">
-                      Your payment is held securely in escrow
+                      Your donation is held securely until collected
                     </p>
                   </div>
                 </div>
@@ -180,9 +183,9 @@ export default function SponsorPurchase() {
                     2
                   </div>
                   <div>
-                    <p className="font-medium">Coins are Placed</p>
+                    <p className="font-medium">Players Find Your Coins</p>
                     <p className="text-sm text-muted-foreground">
-                      When a player starts a session, your coins appear on their map
+                      Coins appear on players' maps as heart-shaped markers
                     </p>
                   </div>
                 </div>
@@ -191,9 +194,9 @@ export default function SponsorPurchase() {
                     3
                   </div>
                   <div>
-                    <p className="font-medium">Donation Released</p>
+                    <p className="font-medium">Funds Save Lives</p>
                     <p className="text-sm text-muted-foreground">
-                      When collected, funds go to British Heart Foundation
+                      100% goes to the British Heart Foundation's research
                     </p>
                   </div>
                 </div>

@@ -270,16 +270,21 @@ export default function SponsorDashboard() {
       {/* CTA */}
       <Card className="p-6 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
-            <h3 className="font-display text-xl font-bold mb-1">Ready to make an impact?</h3>
-            <p className="text-muted-foreground">
-              Purchase coins and watch them get collected by players in real-time.
-            </p>
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+              <Heart className="w-6 h-6 text-primary" />
+            </div>
+            <div className="text-center sm:text-left">
+              <h3 className="font-display text-xl font-bold mb-1">Help Hearts Today</h3>
+              <p className="text-muted-foreground">
+                Every coin you purchase helps fund life-saving research at the British Heart Foundation.
+              </p>
+            </div>
           </div>
           <Button size="lg" asChild className="gap-2" data-testid="button-purchase-coins">
             <Link href="/sponsor/purchase">
-              <Coins className="w-5 h-5" />
-              Purchase Coins
+              <Heart className="w-5 h-5" />
+              Fund Heart Research
             </Link>
           </Button>
         </div>

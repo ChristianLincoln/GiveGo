@@ -450,4 +450,139 @@
   .leaflet-popup-tip {
     background: hsl(var(--popover));
   }
+
+  /* Sponsor Map Markers */
+  .sponsor-marker-active,
+  .sponsor-marker-collected,
+  .sponsor-marker-expired {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .sponsor-coin-marker {
+    width: 40px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .sponsor-coin-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid hsl(var(--background));
+    box-shadow: 0 4px 12px hsl(var(--foreground) / 0.3);
+  }
+
+  .sponsor-coin-value {
+    font-size: 10px;
+    font-weight: bold;
+    color: hsl(var(--foreground));
+    background: hsl(var(--background));
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-top: 2px;
+    box-shadow: 0 2px 4px hsl(var(--foreground) / 0.2);
+  }
+
+  /* Active coins - pulsing red heart */
+  .sponsor-coin-active .sponsor-coin-icon {
+    background: linear-gradient(145deg, #dc2644 0%, #b91c3c 100%);
+    color: white;
+  }
+
+  .sponsor-coin-active .sponsor-coin-pulse {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #dc2644;
+    opacity: 0.4;
+    animation: sponsor-pulse 2s ease-out infinite;
+  }
+
+  /* Collected coins - green check heart */
+  .sponsor-coin-collected .sponsor-coin-icon {
+    background: linear-gradient(145deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+  }
+
+  /* Expired coins - gray heart */
+  .sponsor-coin-expired .sponsor-coin-icon {
+    background: linear-gradient(145deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+    opacity: 0.7;
+  }
+
+  @keyframes sponsor-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  /* Sponsor popup styling */
+  .sponsor-popup {
+    text-align: center;
+    padding: 8px;
+    min-width: 140px;
+  }
+
+  .sponsor-popup-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: hsl(var(--foreground));
+    margin-bottom: 4px;
+  }
+
+  .sponsor-popup-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .sponsor-popup-status.placed {
+    background: #dc2644;
+    color: white;
+  }
+
+  .sponsor-popup-status.collected {
+    background: #22c55e;
+    color: white;
+  }
+
+  .sponsor-popup-status.expired {
+    background: #6b7280;
+    color: white;
+  }
+
+  .sponsor-popup-time {
+    font-size: 10px;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 8px;
+  }
+
+  .sponsor-popup-bhf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #dc2644;
+    font-weight: 500;
+    border-top: 1px solid hsl(var(--border));
+    padding-top: 8px;
+  }
 }
