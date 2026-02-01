@@ -20,6 +20,7 @@ import {
   Loader2,
   ArrowLeft
 } from "lucide-react";
+import { CoinMap } from "@/components/CoinMap";
 import type { PlayerSession, GeneratedCoin } from "@shared/schema";
 
 interface SessionData {
@@ -307,47 +308,18 @@ export default function PlayerSession() {
             <h3 className="font-semibold">Nearby Coins</h3>
           </div>
 
-          {/* Simple coin representation (map would go here with Leaflet) */}
-          <div className="bg-muted rounded-xl aspect-video relative mb-4 overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-4 h-4 bg-primary rounded-full animate-pulse" />
-            </div>
-            {/* Simplified coin markers */}
-            {coins
-              .filter((c) => c.status === "placed")
-              .map((coin) => {
-                if (!position) return null;
-                const distance = calculateDistance(
-                  position.latitude,
-                  position.longitude,
-                  coin.latitude,
-                  coin.longitude
-                );
-                // Simple positioning for demo (would use real map)
-                const angle = Math.atan2(
-                  coin.longitude - position.longitude,
-                  coin.latitude - position.latitude
-                );
-                const maxOffset = 40; // percentage
-                const offsetX = Math.sin(angle) * Math.min(distance / 50, maxOffset);
-                const offsetY = -Math.cos(angle) * Math.min(distance / 50, maxOffset);
-
-                return (
-                  <div
-                    key={coin.id}
-                    className="absolute w-8 h-8 bg-accent rounded-full flex items-center justify-center gold-glow cursor-pointer"
-                    style={{
-                      left: `calc(50% + ${offsetX}%)`,
-                      top: `calc(50% + ${offsetY}%)`,
-                      transform: "translate(-50%, -50%)",
-                    }}
-                    onClick={() => handleCollectCoin(coin)}
-                  >
-                    <Coins className="w-4 h-4 text-accent-foreground" />
-                  </div>
-                );
-              })}
-          </div>
+          {/* Interactive Map with User Location and Coins */}
+          {position && (
+            <CoinMap
+              userPosition={{ latitude: position.latitude, longitude: position.longitude }}
+              coins={coins}
+              onCoinClick={(coinId) => {
+                const coin = coins.find((c) => c.id === coinId);
+                if (coin) handleCollectCoin(coin);
+              }}
+              collectionRadius={COLLECTION_RADIUS_METERS}
+            />
+          )}
 
           {/* Coin List */}
           <div className="space-y-3">

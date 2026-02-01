@@ -220,13 +220,13 @@
     inset: -1px;
   }
 
-  /* Coin glow animation - Heart Red */
+  /* Coin glow animation using primary color */
   @keyframes coin-pulse {
     0%, 100% {
-      box-shadow: 0 0 20px 5px rgba(220, 38, 68, 0.3);
+      box-shadow: 0 0 20px 5px hsl(var(--primary) / 0.3);
     }
     50% {
-      box-shadow: 0 0 30px 10px rgba(220, 38, 68, 0.5);
+      box-shadow: 0 0 30px 10px hsl(var(--primary) / 0.5);
     }
   }
 
@@ -234,13 +234,13 @@
     animation: coin-pulse 2s ease-in-out infinite;
   }
 
-  /* Gold coin glow */
+  /* Gold coin glow using accent color */
   @keyframes gold-pulse {
     0%, 100% {
-      box-shadow: 0 0 20px 5px rgba(234, 179, 8, 0.3);
+      box-shadow: 0 0 20px 5px hsl(var(--accent) / 0.3);
     }
     50% {
-      box-shadow: 0 0 30px 10px rgba(234, 179, 8, 0.5);
+      box-shadow: 0 0 30px 10px hsl(var(--accent) / 0.5);
     }
   }
 
@@ -260,5 +260,68 @@
 
   .marker-bounce {
     animation: marker-bounce 1s ease-in-out infinite;
+  }
+
+  /* Leaflet map marker styles */
+  .user-marker-container {
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  .user-location-marker {
+    width: 20px;
+    height: 20px;
+    background: hsl(var(--primary));
+    border: 3px solid hsl(var(--background));
+    border-radius: 50%;
+    box-shadow: 0 2px 6px hsl(var(--foreground) / 0.2);
+  }
+
+  .coin-marker-container {
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  .coin-location-marker {
+    width: 32px;
+    height: 32px;
+    background: hsl(var(--accent));
+    border: 3px solid hsl(var(--background));
+    border-radius: 50%;
+    box-shadow: 0 3px 8px hsl(var(--foreground) / 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: gold-glow 2s ease-in-out infinite;
+  }
+
+  .coin-location-marker::after {
+    content: "C";
+    font-size: 14px;
+    font-weight: bold;
+    color: hsl(var(--accent-foreground));
+  }
+
+  /* Leaflet collection radius circle styling */
+  .collection-radius-circle {
+    stroke: hsl(var(--primary));
+    fill: hsl(var(--primary));
+  }
+
+  /* Coin popup styling - themed for light/dark mode */
+  .coin-popup {
+    text-align: center;
+    padding: 4px;
+    color: hsl(var(--foreground));
+  }
+
+  /* Override Leaflet popup background for theme compatibility */
+  .leaflet-popup-content-wrapper {
+    background: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+  }
+
+  .leaflet-popup-tip {
+    background: hsl(var(--popover));
   }
 }

@@ -86,7 +86,16 @@ Key database tables:
 - `manifest.json` with app icons and metadata
 - `service-worker.js` for caching and offline support
 - Installable on iOS and Android devices
-- Theme color: #10b981 (emerald green)
+- Theme color: #dc2644 (heart red - British Heart Foundation branding)
+
+### Interactive Map
+- Built with Leaflet and OpenStreetMap tiles
+- User location marker with primary color
+- Collection radius circle (10m) around user
+- Gold coin markers with accent color glow animation
+- Popup info with coin value and collection prompt
+- Auto-zoom to fit user and all coins in view
+- Theme-aware CSS variables for light/dark mode compatibility
 
 ## External Dependencies
 
@@ -112,6 +121,13 @@ Key database tables:
 - Stripe credentials are fetched dynamically via Replit connectors
 
 ## Recent Changes
+
+**Feb 2026 - Map & Theme Updates**
+- Changed theme from emerald green to heart red (#dc2644) for British Heart Foundation branding
+- Added interactive Leaflet map with OpenStreetMap tiles showing user location and coins
+- Implemented theme-aware CSS variables for all map elements (light/dark mode support)
+- Added graceful error handling when no coins available for session start
+- Created seed script (server/seed.ts) with demo sponsor data for testing
 
 **Feb 2026 - Initial MVP Complete**
 - Full PWA setup with manifest, service worker, and icons
