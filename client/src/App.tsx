@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider, useTheme } from "@/components/theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { AppLayout } from "@/components/app-layout";
 import { Loader2 } from "lucide-react";
@@ -31,11 +31,21 @@ interface UserRoleData {
 function AuthenticatedApp() {
   const { user, isLoading: authLoading } = useAuth();
   const [, navigate] = useLocation();
+  const { setUserRole } = useTheme();
 
   const { data: roleData, isLoading: roleLoading, refetch: refetchRole } = useQuery<UserRoleData>({
     queryKey: ["/api/user/role"],
     enabled: !!user,
   });
+
+  // Set role in theme context whenever role changes
+  useEffect(() => {
+    if (roleData?.currentRole) {
+      setUserRole(roleData.currentRole);
+    } else {
+      setUserRole(null);
+    }
+  }, [roleData?.currentRole, setUserRole]);
 
   // Handle role changes
   const handleRoleSwitch = () => {

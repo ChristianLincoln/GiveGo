@@ -49,7 +49,7 @@ export interface IStorage {
   createSponsorProfile(data: InsertSponsorProfile): Promise<SponsorProfile>;
   updateSponsorStripeCustomerId(userId: string, customerId: string): Promise<void>;
   updateSponsorPurchasedCount(userId: string, quantity: number): Promise<void>;
-  updateSponsorStats(userId: string, coinsPlaced: number, donated: number): Promise<void>;
+  updateSponsorStats(userId: string, coinsPlaced: number, donated: number, coinsPurchased?: number): Promise<void>;
 
   // Coin Inventory
   getCoinInventory(sponsorId: string): Promise<CoinInventory[]>;
@@ -199,13 +199,19 @@ export class DatabaseStorage implements IStorage {
       .where(eq(sponsorProfiles.userId, userId));
   }
 
-  async updateSponsorStats(userId: string, coinsPlaced: number, donated: number): Promise<void> {
+  async updateSponsorStats(userId: string, coinsPlaced: number, donated: number, coinsPurchased?: number): Promise<void> {
+    const updateFields: Record<string, any> = {
+      totalCoinsPlaced: sql`${sponsorProfiles.totalCoinsPlaced} + ${coinsPlaced}`,
+      totalDonated: sql`${sponsorProfiles.totalDonated} + ${donated}`,
+    };
+    
+    if (coinsPurchased !== undefined && coinsPurchased > 0) {
+      updateFields.totalCoinsPurchased = sql`${sponsorProfiles.totalCoinsPurchased} + ${coinsPurchased}`;
+    }
+    
     await db
       .update(sponsorProfiles)
-      .set({
-        totalCoinsPlaced: sql`${sponsorProfiles.totalCoinsPlaced} + ${coinsPlaced}`,
-        totalDonated: sql`${sponsorProfiles.totalDonated} + ${donated}`,
-      })
+      .set(updateFields)
       .where(eq(sponsorProfiles.userId, userId));
   }
 

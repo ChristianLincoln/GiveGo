@@ -526,7 +526,7 @@ export async function registerRoutes(
     }
   });
 
-  // Create checkout session
+  // Sandbox mock payment - directly adds coins to inventory (no Stripe)
   app.post("/api/sponsor/checkout", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = req.user?.claims?.sub;
@@ -537,55 +537,24 @@ export async function registerRoutes(
         return res.status(404).json({ message: "Sponsor profile not found" });
       }
 
-      const stripe = await getUncachableStripeClient();
       const totalAmount = coinValue * quantity;
 
-      // Create or get Stripe customer
-      let customerId = profile.stripeCustomerId;
-      if (!customerId) {
-        const user = req.user?.claims;
-        const customer = await stripe.customers.create({
-          email: user?.email,
-          metadata: { userId, profileId: profile.id },
-        });
-        customerId = customer.id;
-        await storage.updateSponsorStripeCustomerId(userId, customerId);
-      }
+      // Sandbox mode: directly add coins to inventory without real payment
+      await storage.addToInventory(profile.id, coinValue, quantity);
 
-      // Create checkout session
-      const host = req.get("host");
-      const protocol = req.protocol;
-      
-      const session = await stripe.checkout.sessions.create({
-        customer: customerId,
-        payment_method_types: ["card"],
-        line_items: [
-          {
-            price_data: {
-              currency: "gbp",
-              product_data: {
-                name: `Give Go Coins (${quantity}x £${(coinValue / 100).toFixed(2)})`,
-                description: `${quantity} coins worth £${(coinValue / 100).toFixed(2)} each for British Heart Foundation`,
-              },
-              unit_amount: coinValue,
-            },
-            quantity,
-          },
-        ],
-        mode: "payment",
-        success_url: `${protocol}://${host}/sponsor?success=true&coins=${quantity}&value=${coinValue}`,
-        cancel_url: `${protocol}://${host}/sponsor/purchase?cancelled=true`,
-        metadata: {
-          sponsorId: profile.id,
-          coinValue: coinValue.toString(),
-          quantity: quantity.toString(),
-        },
+      // Update sponsor stats (coinsPlaced = 0 for purchases, donated = totalAmount, coinsPurchased = quantity)
+      await storage.updateSponsorStats(userId, 0, totalAmount, quantity);
+
+      res.json({ 
+        success: true, 
+        message: `Successfully added ${quantity} coins worth £${(coinValue / 100).toFixed(2)} each`,
+        coins: quantity,
+        value: coinValue,
+        total: totalAmount,
       });
-
-      res.json({ url: session.url });
     } catch (error) {
-      console.error("Error creating checkout:", error);
-      res.status(500).json({ message: "Failed to create checkout session" });
+      console.error("Error processing sandbox payment:", error);
+      res.status(500).json({ message: "Failed to process payment" });
     }
   });
 

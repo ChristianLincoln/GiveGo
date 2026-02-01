@@ -140,6 +140,36 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
+/* SPONSOR MODE - Teal/Cyan Theme (Light) */
+.role-sponsor:not(.dark) {
+  --primary: 180 70% 40%;
+  --primary-foreground: 0 0% 100%;
+  --sidebar-primary: 180 70% 40%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-ring: 180 70% 40%;
+  --ring: 180 70% 40%;
+  --chart-1: 180 70% 40%;
+  --sidebar: 180 30% 96%;
+  --sidebar-border: 180 20% 88%;
+  --sidebar-accent: 180 25% 92%;
+  --sidebar-accent-foreground: 180 30% 15%;
+}
+
+/* SPONSOR MODE - Teal/Cyan Theme (Dark) */
+.role-sponsor.dark {
+  --primary: 180 70% 50%;
+  --primary-foreground: 0 0% 100%;
+  --sidebar-primary: 180 70% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-ring: 180 70% 50%;
+  --ring: 180 70% 50%;
+  --chart-1: 180 70% 50%;
+  --sidebar: 180 20% 10%;
+  --sidebar-border: 180 15% 18%;
+  --sidebar-accent: 180 20% 16%;
+  --sidebar-accent-foreground: 180 20% 90%;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -269,12 +299,43 @@
   }
   
   .user-location-marker {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .user-pulse-ring {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: hsl(var(--primary) / 0.3);
+    animation: user-pulse 2s ease-out infinite;
+  }
+
+  .user-dot {
+    width: 16px;
+    height: 16px;
     background: hsl(var(--primary));
     border: 3px solid hsl(var(--background));
     border-radius: 50%;
-    box-shadow: 0 2px 6px hsl(var(--foreground) / 0.2);
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes user-pulse {
+    0% {
+      transform: scale(0.5);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
   }
 
   .coin-marker-container {
@@ -283,23 +344,88 @@
   }
   
   .coin-location-marker {
-    width: 32px;
-    height: 32px;
-    background: hsl(var(--accent));
+    width: 44px;
+    height: 56px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: coin-bounce 1.5s ease-in-out infinite;
+  }
+
+  .coin-face {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(145deg, hsl(48 100% 55%) 0%, hsl(45 100% 45%) 50%, hsl(38 100% 40%) 100%);
     border: 3px solid hsl(var(--background));
     border-radius: 50%;
-    box-shadow: 0 3px 8px hsl(var(--foreground) / 0.2);
+    box-shadow: 
+      0 4px 12px hsl(var(--foreground) / 0.3),
+      inset 0 -3px 6px hsl(38 100% 30% / 0.4),
+      inset 0 3px 6px hsl(48 100% 70% / 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: gold-glow 2s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
   }
 
-  .coin-location-marker::after {
-    content: "C";
+  .coin-value {
     font-size: 14px;
     font-weight: bold;
-    color: hsl(var(--accent-foreground));
+    color: hsl(30 80% 20%);
+    text-shadow: 0 1px 0 hsl(48 100% 70% / 0.5);
+  }
+
+  .coin-shine {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 10px;
+    height: 10px;
+    background: hsl(48 100% 90% / 0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+    z-index: 3;
+    animation: coin-shine 3s ease-in-out infinite;
+  }
+
+  .coin-bounce-shadow {
+    width: 24px;
+    height: 6px;
+    background: hsl(var(--foreground) / 0.2);
+    border-radius: 50%;
+    margin-top: 4px;
+    animation: shadow-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes coin-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes shadow-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(0.7);
+      opacity: 0.2;
+    }
+  }
+
+  @keyframes coin-shine {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 0.3;
+    }
   }
 
   /* Leaflet collection radius circle styling */

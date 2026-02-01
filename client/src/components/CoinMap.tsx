@@ -53,9 +53,14 @@ export function CoinMap({
     if (!mapRef.current) return;
 
     const userIcon = L.divIcon({
-      html: `<div class="user-location-marker"></div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
+      html: `
+        <div class="user-location-marker">
+          <div class="user-pulse-ring"></div>
+          <div class="user-dot"></div>
+        </div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
       className: "user-marker-container",
     });
 
@@ -95,10 +100,19 @@ export function CoinMap({
     const activeCoins = coins.filter((c) => c.status === "placed");
 
     activeCoins.forEach((coin) => {
+      const valueLabel = (coin.coinValue / 100).toFixed(0);
       const coinIcon = L.divIcon({
-        html: `<div class="coin-location-marker"></div>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
+        html: `
+          <div class="coin-location-marker">
+            <div class="coin-shine"></div>
+            <div class="coin-face">
+              <span class="coin-value">${valueLabel}</span>
+            </div>
+            <div class="coin-bounce-shadow"></div>
+          </div>
+        `,
+        iconSize: [44, 56],
+        iconAnchor: [22, 50],
         className: "coin-marker-container",
       });
 

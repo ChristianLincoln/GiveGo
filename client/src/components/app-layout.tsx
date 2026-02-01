@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { 
   Coins, 
   Home, 
@@ -57,10 +58,11 @@ export function AppLayout({ children, currentRole }: AppLayoutProps) {
             <span className="font-display font-bold text-lg">Give Go</span>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground hidden sm:block">
               {currentRole === "player" ? "Player Mode" : "Sponsor Mode"}
             </span>
+            <ThemeToggle />
             <Avatar className="w-8 h-8">
               <AvatarImage src={user?.profileImageUrl || undefined} />
               <AvatarFallback>
@@ -83,17 +85,16 @@ export function AppLayout({ children, currentRole }: AppLayoutProps) {
             const active = isActive(item.href);
             return (
               <Link key={item.href} href={item.href}>
-                <button
-                  className={`flex flex-col items-center gap-1 p-2 min-w-[64px] rounded-lg transition-colors ${
-                    active
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                <Button
+                  variant="ghost"
+                  className={`flex flex-col items-center gap-1 h-auto py-2 min-w-[64px] ${
+                    active ? "text-primary" : "text-muted-foreground"
                   }`}
                   data-testid={`nav-${item.label.toLowerCase()}`}
                 >
                   <item.icon className="w-5 h-5" />
                   <span className="text-xs font-medium">{item.label}</span>
-                </button>
+                </Button>
               </Link>
             );
           })}

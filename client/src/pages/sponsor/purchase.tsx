@@ -44,14 +44,18 @@ export default function SponsorPurchase() {
       return response.json();
     },
     onSuccess: (data) => {
-      if (data.url) {
-        window.location.href = data.url;
+      if (data.success) {
+        toast({
+          title: "Purchase Successful",
+          description: data.message,
+        });
+        navigate("/sponsor?success=true");
       }
     },
     onError: (error: Error) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to create checkout session",
+        description: error.message || "Failed to process payment",
         variant: "destructive",
       });
     },
@@ -245,7 +249,7 @@ export default function SponsorPurchase() {
               </Button>
 
               <p className="text-xs text-center text-muted-foreground">
-                Secure payment powered by Stripe
+                Sandbox Mode - No real payment required
               </p>
             </Card>
           </div>

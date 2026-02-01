@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
+type UserRole = "player" | "sponsor" | null;
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -11,11 +12,15 @@ type ThemeProviderProps = {
 type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  userRole: UserRole;
+  setUserRole: (role: UserRole) => void;
 };
 
 const initialState: ThemeProviderState = {
   theme: "system",
   setTheme: () => null,
+  userRole: null,
+  setUserRole: () => null,
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
@@ -28,6 +33,10 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  );
+  
+  const [userRole, setUserRoleState] = useState<UserRole>(
+    () => (localStorage.getItem("give-go-role") as UserRole) || null
   );
 
   useEffect(() => {
@@ -46,11 +55,29 @@ export function ThemeProvider({
     root.classList.add(theme);
   }, [theme]);
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove("role-player", "role-sponsor");
+    if (userRole) {
+      root.classList.add(`role-${userRole}`);
+      localStorage.setItem("give-go-role", userRole);
+    }
+  }, [userRole]);
+
   const value = {
     theme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
+    },
+    userRole,
+    setUserRole: (role: UserRole) => {
+      if (role) {
+        localStorage.setItem("give-go-role", role);
+      } else {
+        localStorage.removeItem("give-go-role");
+      }
+      setUserRoleState(role);
     },
   };
 
