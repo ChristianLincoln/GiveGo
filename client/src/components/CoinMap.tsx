@@ -121,7 +121,7 @@ export function CoinMap({
 
       marker.bindPopup(`
         <div class="coin-popup">
-          <strong>${(coin.coinValue / 100).toFixed(2)} GBP</strong><br/>
+          <strong>£${(coin.coinValue / 100).toFixed(2)} Heart</strong><br/>
           <small>Tap to collect when nearby</small>
         </div>
       `);

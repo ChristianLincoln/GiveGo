@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
-  Coins, 
   Heart, 
   Package, 
   MapPin, 
@@ -116,7 +115,7 @@ export default function SponsorDashboard() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Coin Distribution Chart */}
         <Card className="lg:col-span-2 p-6">
-          <h3 className="font-semibold mb-4">Coin Distribution</h3>
+          <h3 className="font-semibold mb-4">Heart Distribution</h3>
           {totalCoins > 0 ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -142,7 +141,7 @@ export default function SponsorDashboard() {
                           <div className="bg-popover border border-popover-border rounded-lg p-3 shadow-lg">
                             <p className="font-medium">{data.name}</p>
                             <p className="text-sm text-muted-foreground">
-                              {data.value} coins ({((data.value / totalCoins) * 100).toFixed(1)}%)
+                              {data.value} hearts ({((data.value / totalCoins) * 100).toFixed(1)}%)
                             </p>
                           </div>
                         );
@@ -157,8 +156,8 @@ export default function SponsorDashboard() {
           ) : (
             <div className="h-64 flex items-center justify-center text-muted-foreground">
               <div className="text-center">
-                <Coins className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                <p>Purchase coins to see your distribution</p>
+                <Heart className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <p>Purchase hearts to see your distribution</p>
               </div>
             </div>
           )}
@@ -168,10 +167,10 @@ export default function SponsorDashboard() {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Inventory</h3>
-            <Button size="sm" asChild data-testid="button-buy-coins">
+            <Button size="sm" asChild data-testid="button-buy-hearts">
               <Link href="/sponsor/purchase">
                 <Plus className="w-4 h-4 mr-1" />
-                Buy Coins
+                Buy Hearts
               </Link>
             </Button>
           </div>
@@ -185,11 +184,11 @@ export default function SponsorDashboard() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                      <Coins className="w-5 h-5 text-accent-foreground" />
+                      <Heart className="w-5 h-5 text-accent-foreground" />
                     </div>
                     <div>
-                      <p className="font-medium">{formatCurrency(inv.coinValue)} coins</p>
-                      <p className="text-xs text-muted-foreground">Per coin value</p>
+                      <p className="font-medium">{formatCurrency(inv.coinValue)} hearts</p>
+                      <p className="text-xs text-muted-foreground">Per heart value</p>
                     </div>
                   </div>
                   <Badge variant="secondary">{inv.quantity} available</Badge>
@@ -198,9 +197,9 @@ export default function SponsorDashboard() {
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">
-              <Package className="w-10 h-10 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No coins in inventory</p>
-              <p className="text-xs">Purchase coins to get started</p>
+              <Heart className="w-10 h-10 mx-auto mb-2 opacity-50" />
+              <p className="text-sm">No hearts in inventory</p>
+              <p className="text-xs">Purchase hearts to get started</p>
             </div>
           )}
         </Card>
@@ -208,7 +207,7 @@ export default function SponsorDashboard() {
 
       {/* Recent Activity */}
       <Card className="p-6">
-        <h3 className="font-semibold mb-4">Recent Coin Activity</h3>
+        <h3 className="font-semibold mb-4">Recent Heart Activity</h3>
         {stats.recentCoins.length > 0 ? (
           <div className="space-y-3">
             {stats.recentCoins.slice(0, 5).map((coin) => (
@@ -262,7 +261,7 @@ export default function SponsorDashboard() {
         ) : (
           <div className="text-center py-8 text-muted-foreground">
             <TrendingUp className="w-10 h-10 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">No coin activity yet</p>
+            <p className="text-sm">No heart activity yet</p>
           </div>
         )}
       </Card>
@@ -277,11 +276,11 @@ export default function SponsorDashboard() {
             <div className="text-center sm:text-left">
               <h3 className="font-display text-xl font-bold mb-1">Help Hearts Today</h3>
               <p className="text-muted-foreground">
-                Every coin you purchase helps fund life-saving research at the British Heart Foundation.
+                Every heart you purchase helps fund life-saving research at the British Heart Foundation.
               </p>
             </div>
           </div>
-          <Button size="lg" asChild className="gap-2" data-testid="button-purchase-coins">
+          <Button size="lg" asChild className="gap-2" data-testid="button-purchase-hearts">
             <Link href="/sponsor/purchase">
               <Heart className="w-5 h-5" />
               Fund Heart Research

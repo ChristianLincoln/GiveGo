@@ -10,7 +10,7 @@ import { useGeolocation } from "@/hooks/use-geolocation";
 import { calculateDistance } from "@/lib/geolocation";
 import { apiRequest } from "@/lib/queryClient";
 import { 
-  Coins, 
+  Heart, 
   MapPin, 
   Navigation, 
   Clock, 
@@ -64,7 +64,7 @@ export default function PlayerSession() {
       if (data.message) {
         toast({ title: "Session started", description: data.message });
       } else {
-        toast({ title: "Session started!", description: "Find and collect coins near you." });
+        toast({ title: "Session started!", description: "Find and collect hearts near you." });
       }
     },
     onError: (error: Error) => {
@@ -72,8 +72,8 @@ export default function PlayerSession() {
       setSessionStartError(error.message);
       if (error.message.includes("No coins available")) {
         toast({ 
-          title: "No coins available right now", 
-          description: "Sponsors haven't placed any coins yet. Check back later!", 
+          title: "No hearts available right now", 
+          description: "Sponsors haven't placed any hearts yet. Check back later!", 
         });
       } else {
         toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -95,7 +95,7 @@ export default function PlayerSession() {
       queryClient.invalidateQueries({ queryKey: ["/api/player/session/active"] });
       queryClient.invalidateQueries({ queryKey: ["/api/player/stats"] });
       toast({
-        title: "Coin collected!",
+        title: "Heart collected!",
         description: `£${(data.coinValue / 100).toFixed(2)} donated to British Heart Foundation!`,
       });
       setCollectingCoinId(null);
@@ -196,11 +196,11 @@ export default function PlayerSession() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="p-8 max-w-md w-full text-center">
-          <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <h2 className="font-display text-xl font-bold mb-2">Session Couldn't Start</h2>
           <p className="text-muted-foreground mb-6">
             {sessionStartError.includes("No coins") || sessionStartError.includes("coins")
-              ? "No coins are available right now. Sponsors haven't placed any coins yet."
+              ? "No hearts are available right now. Sponsors haven't placed any hearts yet."
               : sessionStartError}
           </p>
           <div className="space-y-2">
@@ -230,7 +230,7 @@ export default function PlayerSession() {
           <p className="text-muted-foreground">
             {geoLoading
               ? "Please allow location access when prompted."
-              : "Finding coins near you..."}
+              : "Finding hearts near you..."}
           </p>
         </Card>
       </div>
@@ -258,7 +258,7 @@ export default function PlayerSession() {
           <div className="text-center">
             <h1 className="font-display font-bold">Active Session</h1>
             <p className="text-xs text-muted-foreground">
-              {activeCoinCount} coins remaining
+              {activeCoinCount} hearts remaining
             </p>
           </div>
           <Button
@@ -277,7 +277,7 @@ export default function PlayerSession() {
       <div className="p-4 max-w-4xl mx-auto">
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="p-4 text-center">
-            <Coins className="w-8 h-8 text-primary mx-auto mb-2" />
+            <Heart className="w-8 h-8 text-primary mx-auto mb-2" />
             <p className="font-display text-2xl font-bold">{collectedCount}</p>
             <p className="text-xs text-muted-foreground">Collected</p>
           </Card>
@@ -294,18 +294,18 @@ export default function PlayerSession() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Session Progress</span>
               <span className="text-sm text-muted-foreground">
-                {collectedCount}/{coins.length} coins
+                {collectedCount}/{coins.length} hearts
               </span>
             </div>
             <Progress value={(collectedCount / coins.length) * 100} />
           </div>
         )}
 
-        {/* Map Placeholder / Coin List */}
+        {/* Map Placeholder / Heart List */}
         <Card className="p-4 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Navigation className="w-5 h-5 text-primary" />
-            <h3 className="font-semibold">Nearby Coins</h3>
+            <h3 className="font-semibold">Nearby Hearts</h3>
           </div>
 
           {/* Interactive Map with User Location and Coins */}
@@ -352,7 +352,7 @@ export default function PlayerSession() {
                           canCollect ? "bg-primary" : "bg-accent"
                         }`}
                       >
-                        <Coins
+                        <Heart
                           className={`w-5 h-5 ${
                             canCollect ? "text-primary-foreground" : "text-accent-foreground"
                           }`}
@@ -386,9 +386,9 @@ export default function PlayerSession() {
             {activeCoinCount === 0 && coins.length > 0 && (
               <div className="text-center py-8">
                 <CheckCircle className="w-12 h-12 text-primary mx-auto mb-2" />
-                <p className="font-medium">All coins collected!</p>
+                <p className="font-medium">All hearts collected!</p>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Great job! You've collected all available coins.
+                  Great job! You've collected all available hearts.
                 </p>
                 <Button onClick={() => endSession.mutate()} data-testid="button-finish-session">
                   Finish Session
@@ -398,10 +398,10 @@ export default function PlayerSession() {
 
             {activeCoinCount === 0 && coins.length === 0 && (
               <div className="text-center py-8">
-                <Coins className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                <p className="font-medium">No coins available right now</p>
+                <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                <p className="font-medium">No hearts available right now</p>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Sponsors haven't placed any coins in your area yet. Check back later or try a different location!
+                  Sponsors haven't placed any hearts in your area yet. Check back later or try a different location!
                 </p>
                 <Button onClick={() => endSession.mutate()} variant="outline" data-testid="button-end-empty-session">
                   End Session

@@ -85,7 +85,7 @@ export default function SponsorTracking() {
           <Heart className="w-5 h-5 text-primary" />
         </div>
         <div>
-          <h1 className="font-display text-2xl font-bold">Heart Coin Tracking</h1>
+          <h1 className="font-display text-2xl font-bold">Heart Tracking</h1>
           <p className="text-muted-foreground text-sm">Track your donations to the British Heart Foundation</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function SponsorTracking() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-primary" />
-            <span className="font-medium">Live Coin Map</span>
+            <span className="font-medium">Live Heart Map</span>
           </div>
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1">
@@ -118,8 +118,8 @@ export default function SponsorTracking() {
           <div className="bg-muted aspect-video relative flex items-center justify-center">
             <div className="text-center text-muted-foreground">
               <Heart className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>No coins to display</p>
-              <p className="text-xs">Purchase coins and they'll appear here when placed</p>
+              <p>No hearts to display</p>
+              <p className="text-xs">Purchase hearts and they'll appear here when placed</p>
             </div>
           </div>
         )}
@@ -146,11 +146,11 @@ export default function SponsorTracking() {
           {filteredCoins.length === 0 ? (
             <Card className="p-8 text-center">
               <Package className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="font-semibold mb-2">No coins found</h3>
+              <h3 className="font-semibold mb-2">No hearts found</h3>
               <p className="text-muted-foreground text-sm">
                 {filter === "all"
-                  ? "You haven't placed any coins yet."
-                  : `No ${filter} coins at the moment.`}
+                  ? "You haven't placed any hearts yet."
+                  : `No ${filter} hearts at the moment.`}
               </p>
             </Card>
           ) : (

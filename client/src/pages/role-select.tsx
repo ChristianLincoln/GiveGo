@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { MapPin, Coins, ArrowRight, Check } from "lucide-react";
+import { MapPin, Heart, ArrowRight, Check } from "lucide-react";
 
 interface RoleSelectProps {
   onComplete: () => void;
@@ -66,7 +66,7 @@ export default function RoleSelect({ onComplete }: RoleSelectProps) {
       <div className="max-w-2xl w-full space-y-8">
         <div className="text-center space-y-2">
           <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Coins className="w-8 h-8 text-primary-foreground" />
+            <Heart className="w-8 h-8 text-primary-foreground" />
           </div>
           <h1 className="font-display text-3xl font-bold">Choose Your Role</h1>
           <p className="text-muted-foreground">
@@ -97,7 +97,7 @@ export default function RoleSelect({ onComplete }: RoleSelectProps) {
             </div>
             <h3 className="font-display text-xl font-bold mb-2">Player</h3>
             <p className="text-muted-foreground text-sm mb-4">
-              Explore your city, collect coins, and make donations to charity through your walks.
+              Explore your city, collect hearts, and make donations to charity through your walks.
             </p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">Free to play</Badge>
@@ -117,7 +117,7 @@ export default function RoleSelect({ onComplete }: RoleSelectProps) {
           >
             <div className="flex items-start justify-between mb-4">
               <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center">
-                <Coins className="w-6 h-6 text-accent" />
+                <Heart className="w-6 h-6 text-accent" />
               </div>
               {selectedRole === "sponsor" && (
                 <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
@@ -127,7 +127,7 @@ export default function RoleSelect({ onComplete }: RoleSelectProps) {
             </div>
             <h3 className="font-display text-xl font-bold mb-2">Sponsor</h3>
             <p className="text-muted-foreground text-sm mb-4">
-              Purchase coins to fund donations and track your charitable impact in real-time.
+              Purchase hearts to fund donations and track your charitable impact in real-time.
             </p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">Fund donations</Badge>

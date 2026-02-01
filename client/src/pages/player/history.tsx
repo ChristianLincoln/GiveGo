@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Coins, Calendar, Heart } from "lucide-react";
+import { Calendar, Heart } from "lucide-react";
 import type { CollectionHistory } from "@shared/schema";
 
 interface HistoryResponse {
@@ -60,7 +60,7 @@ export default function PlayerHistory() {
       <div>
         <h1 className="font-display text-2xl font-bold mb-2">Collection History</h1>
         <p className="text-muted-foreground">
-          Your coin collection journey
+          Your heart collection journey
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default function PlayerHistory() {
         <Card className="p-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-              <Coins className="w-5 h-5 text-primary" />
+              <Heart className="w-5 h-5 text-primary" />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Total Collected</p>
@@ -95,10 +95,10 @@ export default function PlayerHistory() {
       {/* History List */}
       {Object.keys(groupedHistory).length === 0 ? (
         <Card className="p-8 text-center">
-          <Coins className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+          <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="font-semibold mb-2">No collections yet</h3>
           <p className="text-muted-foreground">
-            Start a session to collect coins and make donations!
+            Start a session to collect hearts and make donations!
           </p>
         </Card>
       ) : (
@@ -115,10 +115,10 @@ export default function PlayerHistory() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center">
-                          <Coins className="w-5 h-5 text-accent" />
+                          <Heart className="w-5 h-5 text-accent" />
                         </div>
                         <div>
-                          <p className="font-medium">Coin Collected</p>
+                          <p className="font-medium">Heart Collected</p>
                           <p className="text-sm text-muted-foreground">
                             {new Date(item.collectedAt).toLocaleTimeString("en-GB", {
                               hour: "2-digit",

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Heart, MapPin, Coins, Users, Trophy, ArrowRight, Sparkles } from "lucide-react";
+import { Heart, MapPin, Users, Trophy, ArrowRight, Sparkles } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -43,7 +43,7 @@ export default function LandingPage() {
               
               <p className="text-lg text-muted-foreground max-w-lg">
                 Give Go is a GPS-based game that turns your daily walks into donations. 
-                Collect virtual coins placed by sponsors and help fund life-saving research.
+                Collect virtual hearts placed by sponsors and help fund life-saving research.
               </p>
               
               <div className="flex flex-wrap items-center gap-4">
@@ -88,15 +88,15 @@ export default function LandingPage() {
                   <div className="bg-muted rounded-2xl aspect-[3/4] flex items-center justify-center overflow-hidden relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
                     
-                    {/* Coin markers */}
+                    {/* Heart markers */}
                     <div className="absolute top-1/4 left-1/3 w-10 h-10 bg-accent rounded-full flex items-center justify-center gold-glow">
-                      <Coins className="w-5 h-5 text-accent-foreground" />
+                      <Heart className="w-5 h-5 text-accent-foreground" />
                     </div>
                     <div className="absolute top-1/2 right-1/4 w-10 h-10 bg-primary rounded-full flex items-center justify-center coin-glow">
-                      <Coins className="w-5 h-5 text-primary-foreground" />
+                      <Heart className="w-5 h-5 text-primary-foreground" />
                     </div>
                     <div className="absolute bottom-1/3 left-1/2 w-10 h-10 bg-accent rounded-full flex items-center justify-center gold-glow">
-                      <Coins className="w-5 h-5 text-accent-foreground" />
+                      <Heart className="w-5 h-5 text-accent-foreground" />
                     </div>
                     
                     {/* Center user marker */}
@@ -134,7 +134,7 @@ export default function LandingPage() {
               <div>
                 <h3 className="font-display text-2xl font-bold mb-2">For Players</h3>
                 <p className="text-muted-foreground mb-6">
-                  Explore your city, collect coins, and watch your donations grow.
+                  Explore your city, collect hearts, and watch your donations grow.
                 </p>
               </div>
               <div className="space-y-4">
@@ -144,7 +144,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="font-medium">Start a Session</p>
-                    <p className="text-sm text-muted-foreground">Open the app and begin collecting coins near you</p>
+                    <p className="text-sm text-muted-foreground">Open the app and begin collecting hearts near you</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -153,7 +153,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="font-medium">Walk & Collect</p>
-                    <p className="text-sm text-muted-foreground">Navigate to coin locations within 10 meters to collect</p>
+                    <p className="text-sm text-muted-foreground">Navigate to heart locations within 10 meters to collect</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -162,7 +162,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="font-medium">Make a Difference</p>
-                    <p className="text-sm text-muted-foreground">Each coin triggers a donation to the British Heart Foundation</p>
+                    <p className="text-sm text-muted-foreground">Each heart triggers a donation to the British Heart Foundation</p>
                   </div>
                 </div>
               </div>
@@ -171,12 +171,12 @@ export default function LandingPage() {
             {/* For Sponsors */}
             <Card className="p-8 space-y-6 hover-elevate">
               <div className="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center">
-                <Coins className="w-7 h-7 text-accent" />
+                <Heart className="w-7 h-7 text-accent" />
               </div>
               <div>
                 <h3 className="font-display text-2xl font-bold mb-2">For Sponsors</h3>
                 <p className="text-muted-foreground mb-6">
-                  Fund coins, track impact, and engage with your community.
+                  Fund hearts, track impact, and engage with your community.
                 </p>
               </div>
               <div className="space-y-4">
@@ -185,8 +185,8 @@ export default function LandingPage() {
                     1
                   </div>
                   <div>
-                    <p className="font-medium">Purchase Coins</p>
-                    <p className="text-sm text-muted-foreground">Choose your coin value and quantity</p>
+                    <p className="font-medium">Purchase Hearts</p>
+                    <p className="text-sm text-muted-foreground">Choose your heart value and quantity</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -195,7 +195,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="font-medium">Funds Held in Escrow</p>
-                    <p className="text-sm text-muted-foreground">Money is secure until coins are collected</p>
+                    <p className="text-sm text-muted-foreground">Money is secure until hearts are collected</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -204,7 +204,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <p className="font-medium">Track Your Impact</p>
-                    <p className="text-sm text-muted-foreground">Watch coins get collected in real-time</p>
+                    <p className="text-sm text-muted-foreground">Watch hearts get collected in real-time</p>
                   </div>
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function LandingPage() {
               <MapPin className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold text-lg mb-2">GPS Tracking</h3>
               <p className="text-muted-foreground text-sm">
-                Real-time location tracking to find and collect coins near you.
+                Real-time location tracking to find and collect hearts near you.
               </p>
             </Card>
             
@@ -244,15 +244,15 @@ export default function LandingPage() {
               <Heart className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold text-lg mb-2">British Heart Foundation</h3>
               <p className="text-muted-foreground text-sm">
-                100% of coin value goes to funding life-saving heart research.
+                100% of heart value goes to funding life-saving heart research.
               </p>
             </Card>
             
             <Card className="p-6 hover-elevate">
-              <Coins className="w-10 h-10 text-primary mb-4" />
+              <Heart className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold text-lg mb-2">Secure Escrow</h3>
               <p className="text-muted-foreground text-sm">
-                Sponsor funds are held securely until coins are collected.
+                Sponsor funds are held securely until hearts are collected.
               </p>
             </Card>
             
@@ -268,7 +268,7 @@ export default function LandingPage() {
               <Sparkles className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold text-lg mb-2">Real-time Updates</h3>
               <p className="text-muted-foreground text-sm">
-                Live updates on coin collections and donations.
+                Live updates on heart collections and donations.
               </p>
             </Card>
           </div>

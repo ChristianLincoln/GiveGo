@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
-  Coins, 
   Heart, 
   Trophy, 
   MapPin, 
@@ -61,10 +60,10 @@ export default function PlayerDashboard() {
         <Card className="p-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-              <Coins className="w-5 h-5 text-primary" />
+              <Heart className="w-5 h-5 text-primary" />
             </div>
             <div className="min-w-0">
-              <p className="text-sm text-muted-foreground truncate">Coins Collected</p>
+              <p className="text-sm text-muted-foreground truncate">Hearts Collected</p>
               <p className="font-display text-2xl font-bold">{stats.profile.totalCoinsCollected}</p>
             </div>
           </div>
@@ -142,7 +141,7 @@ export default function PlayerDashboard() {
                           <div className="bg-popover border border-popover-border rounded-lg p-3 shadow-lg">
                             <p className="text-sm font-medium">{payload[0]?.payload?.date}</p>
                             <p className="text-sm text-primary">
-                              Coins: {payload[0]?.value}
+                              Hearts: {payload[0]?.value}
                             </p>
                             <p className="text-sm text-destructive">
                               Donated: £{((payload[1]?.value as number) / 100).toFixed(2)}
@@ -175,7 +174,7 @@ export default function PlayerDashboard() {
           ) : (
             <div className="h-64 flex items-center justify-center text-muted-foreground">
               <div className="text-center">
-                <Coins className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <Heart className="w-12 h-12 mx-auto mb-2 opacity-50" />
                 <p>Start collecting to see your progress</p>
               </div>
             </div>
@@ -218,7 +217,7 @@ export default function PlayerDashboard() {
                         )}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {entry.totalCoinsCollected} coins · {formatCurrency(entry.totalDonated)}
+                        {entry.totalCoinsCollected} hearts · {formatCurrency(entry.totalDonated)}
                       </p>
                     </div>
                   </div>

@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
-  Coins, 
   ArrowLeft, 
   Check,
   Heart,
@@ -76,7 +75,7 @@ export default function SponsorPurchase() {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h1 className="font-display font-bold">Purchase Coins</h1>
+            <h1 className="font-display font-bold">Purchase Hearts</h1>
             <p className="text-xs text-muted-foreground">Fund donations to charity</p>
           </div>
         </div>
@@ -88,9 +87,9 @@ export default function SponsorPurchase() {
           <div className="lg:col-span-2 space-y-6">
             {/* Coin Value Selection */}
             <Card className="p-6">
-              <h3 className="font-semibold mb-4">Select Coin Value</h3>
+              <h3 className="font-semibold mb-4">Select Heart Value</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Each coin represents a donation amount when collected by a player.
+                Each heart represents a donation amount when collected by a player.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {COIN_OPTIONS.map((option) => (
@@ -108,10 +107,10 @@ export default function SponsorPurchase() {
                       <Badge className="absolute -top-2 -right-2 text-xs">Popular</Badge>
                     )}
                     <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Coins className="w-6 h-6 text-accent-foreground" />
+                      <Heart className="w-6 h-6 text-accent-foreground" />
                     </div>
                     <p className="font-display text-xl font-bold">{option.label}</p>
-                    <p className="text-xs text-muted-foreground">per coin</p>
+                    <p className="text-xs text-muted-foreground">per heart</p>
                     {selectedValue === option.value && (
                       <div className="absolute top-2 right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
                         <Check className="w-3 h-3 text-primary-foreground" />
@@ -126,7 +125,7 @@ export default function SponsorPurchase() {
             <Card className="p-6">
               <h3 className="font-semibold mb-4">Select Quantity</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                How many coins would you like to purchase?
+                How many hearts would you like to purchase?
               </p>
               
               <div className="flex flex-wrap gap-2 mb-4">
@@ -137,7 +136,7 @@ export default function SponsorPurchase() {
                     onClick={() => setQuantity(preset)}
                     data-testid={`button-quantity-${preset}`}
                   >
-                    {preset} coins
+                    {preset} hearts
                   </Button>
                 ))}
               </div>
@@ -156,7 +155,7 @@ export default function SponsorPurchase() {
                   className="w-24"
                   data-testid="input-custom-quantity"
                 />
-                <span className="text-muted-foreground">coins</span>
+                <span className="text-muted-foreground">hearts</span>
               </div>
             </Card>
 
@@ -172,7 +171,7 @@ export default function SponsorPurchase() {
                     1
                   </div>
                   <div>
-                    <p className="font-medium">Purchase Heart Coins</p>
+                    <p className="font-medium">Purchase Hearts</p>
                     <p className="text-sm text-muted-foreground">
                       Your donation is held securely until collected
                     </p>
@@ -183,9 +182,9 @@ export default function SponsorPurchase() {
                     2
                   </div>
                   <div>
-                    <p className="font-medium">Players Find Your Coins</p>
+                    <p className="font-medium">Players Find Your Hearts</p>
                     <p className="text-sm text-muted-foreground">
-                      Coins appear on players' maps as heart-shaped markers
+                      Hearts appear on players' maps as collectible markers
                     </p>
                   </div>
                 </div>
@@ -211,12 +210,12 @@ export default function SponsorPurchase() {
               
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Coin value</span>
+                  <span className="text-muted-foreground">Heart value</span>
                   <span className="font-medium">{formatCurrency(selectedValue)}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Quantity</span>
-                  <span className="font-medium">{quantity} coins</span>
+                  <span className="font-medium">{quantity} hearts</span>
                 </div>
                 <div className="h-px bg-border" />
                 <div className="flex items-center justify-between">

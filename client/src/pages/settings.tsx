@@ -10,13 +10,12 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { 
   User, 
   MapPin, 
-  Coins, 
+  Heart, 
   ArrowRightLeft,
   LogOut,
   Moon,
   Bell,
-  Shield,
-  Heart
+  Shield
 } from "lucide-react";
 
 interface SettingsProps {
@@ -90,7 +89,7 @@ export default function Settings({ currentRole, onRoleSwitch }: SettingsProps) {
                 </>
               ) : (
                 <>
-                  <Coins className="w-3 h-3 mr-1" />
+                  <Heart className="w-3 h-3 mr-1" />
                   Sponsor
                 </>
               )}
@@ -112,7 +111,7 @@ export default function Settings({ currentRole, onRoleSwitch }: SettingsProps) {
           <div className="flex items-center gap-3">
             {currentRole === "player" ? (
               <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center">
-                <Coins className="w-5 h-5 text-accent" />
+                <Heart className="w-5 h-5 text-accent" />
               </div>
             ) : (
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -125,8 +124,8 @@ export default function Settings({ currentRole, onRoleSwitch }: SettingsProps) {
               </p>
               <p className="text-xs text-muted-foreground">
                 {currentRole === "player"
-                  ? "Purchase coins and track donations"
-                  : "Collect coins and earn points"}
+                  ? "Purchase hearts and track donations"
+                  : "Collect hearts and earn points"}
               </p>
             </div>
           </div>
@@ -162,7 +161,7 @@ export default function Settings({ currentRole, onRoleSwitch }: SettingsProps) {
           About Give Go
         </h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Give Go is a GPS-based game that turns walking into giving. Every coin collected 
+          Give Go is a GPS-based game that turns walking into giving. Every heart collected 
           triggers a donation to the British Heart Foundation.
         </p>
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
