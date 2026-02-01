@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
   Coins, 
   ArrowLeft, 
@@ -45,6 +45,7 @@ export default function SponsorPurchase() {
     },
     onSuccess: (data) => {
       if (data.success) {
+        queryClient.invalidateQueries({ queryKey: ["/api/sponsor/stats"] });
         toast({
           title: "Purchase Successful",
           description: data.message,
