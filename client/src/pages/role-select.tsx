@@ -65,9 +65,11 @@ export default function RoleSelect({ onComplete }: RoleSelectProps) {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-8">
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Heart className="w-8 h-8 text-primary-foreground" />
-          </div>
+          <img 
+            src="/icons/heart-logo.png" 
+            alt="Give Go Logo" 
+            className="w-16 h-16 rounded-2xl mx-auto mb-4 object-cover"
+          />
           <h1 className="font-display text-3xl font-bold">Choose Your Role</h1>
           <p className="text-muted-foreground">
             How would you like to use Give Go? You can switch roles anytime.

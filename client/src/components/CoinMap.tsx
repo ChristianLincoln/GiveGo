@@ -16,6 +16,21 @@ interface CoinMapProps {
   collectionRadius?: number;
 }
 
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371e3;
+  const phi1 = lat1 * Math.PI / 180;
+  const phi2 = lat2 * Math.PI / 180;
+  const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+  const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+  const a = Math.sin(deltaPhi/2) * Math.sin(deltaPhi/2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(deltaLambda/2) * Math.sin(deltaLambda/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+
 export function CoinMap({ 
   userPosition, 
   coins, 
@@ -27,6 +42,8 @@ export function CoinMap({
   const userMarkerRef = useRef<L.Marker | null>(null);
   const coinMarkersRef = useRef<L.Marker[]>([]);
   const userCircleRef = useRef<L.Circle | null>(null);
+  const routeLineRef = useRef<L.Polyline | null>(null);
+  const walkingMarkersRef = useRef<L.Marker[]>([]);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -141,6 +158,93 @@ export function CoinMap({
         ...activeCoins.map((c) => [c.latitude, c.longitude] as [number, number]),
       ]);
       mapRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+    }
+
+    // Clear previous route
+    if (routeLineRef.current) {
+      routeLineRef.current.remove();
+      routeLineRef.current = null;
+    }
+    walkingMarkersRef.current.forEach((m) => m.remove());
+    walkingMarkersRef.current = [];
+
+    // Find nearest heart and draw route
+    if (activeCoins.length > 0) {
+      let nearestCoin = activeCoins[0];
+      let nearestDistance = calculateDistance(
+        userPosition.latitude, userPosition.longitude,
+        nearestCoin.latitude, nearestCoin.longitude
+      );
+
+      activeCoins.forEach((coin) => {
+        const distance = calculateDistance(
+          userPosition.latitude, userPosition.longitude,
+          coin.latitude, coin.longitude
+        );
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestCoin = coin;
+        }
+      });
+
+      // Draw dashed route line to nearest heart
+      const routeCoords: L.LatLngExpression[] = [
+        [userPosition.latitude, userPosition.longitude],
+        [nearestCoin.latitude, nearestCoin.longitude]
+      ];
+
+      routeLineRef.current = L.polyline(routeCoords, {
+        color: 'hsl(346, 81%, 50%)',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '12, 8',
+        lineCap: 'round',
+        className: 'walking-route-line'
+      }).addTo(mapRef.current);
+
+      // Add walking markers along the route
+      const steps = 3;
+      for (let i = 1; i <= steps; i++) {
+        const ratio = i / (steps + 1);
+        const lat = userPosition.latitude + (nearestCoin.latitude - userPosition.latitude) * ratio;
+        const lng = userPosition.longitude + (nearestCoin.longitude - userPosition.longitude) * ratio;
+        
+        const walkIcon = L.divIcon({
+          html: `
+            <div class="walking-step-marker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="5" r="2"/>
+                <path d="M10 22l4-8-3-2 4-6"/>
+              </svg>
+            </div>
+          `,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12],
+          className: 'walking-step-container'
+        });
+
+        const marker = L.marker([lat, lng], { icon: walkIcon, interactive: false })
+          .addTo(mapRef.current);
+        walkingMarkersRef.current.push(marker);
+      }
+
+      // Add distance label at midpoint
+      const midLat = (userPosition.latitude + nearestCoin.latitude) / 2;
+      const midLng = (userPosition.longitude + nearestCoin.longitude) / 2;
+      const distanceLabel = nearestDistance < 1000 
+        ? `${Math.round(nearestDistance)}m` 
+        : `${(nearestDistance / 1000).toFixed(1)}km`;
+
+      const distIcon = L.divIcon({
+        html: `<div class="route-distance-label">${distanceLabel}</div>`,
+        iconSize: [60, 24],
+        iconAnchor: [30, 12],
+        className: 'route-distance-container'
+      });
+
+      const distMarker = L.marker([midLat, midLng], { icon: distIcon, interactive: false })
+        .addTo(mapRef.current);
+      walkingMarkersRef.current.push(distMarker);
     }
   }, [coins, onCoinClick, userPosition]);
 

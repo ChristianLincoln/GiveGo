@@ -164,8 +164,18 @@ export default function Settings({ currentRole, onRoleSwitch }: SettingsProps) {
           Give Go is a GPS-based game that turns walking into giving. Every heart collected 
           triggers a donation to the British Heart Foundation.
         </p>
+        <a 
+          href="https://www.bhf.org.uk/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm text-primary hover:underline mb-4"
+          data-testid="link-bhf-charity"
+        >
+          <Heart className="w-4 h-4" />
+          Visit British Heart Foundation
+        </a>
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span>Version 1.0.0</span>
+          <span>Version 1.1.0</span>
           <Separator orientation="vertical" className="h-4" />
           <a href="#" className="hover:text-foreground transition-colors">
             Privacy Policy

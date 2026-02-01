@@ -523,6 +523,57 @@
     background: hsl(var(--popover));
   }
 
+  /* Walking Route Styles */
+  .walking-route-line {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+
+  .walking-step-container {
+    background: transparent !important;
+  }
+
+  .walking-step-marker {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: walking-bounce 1s ease-in-out infinite;
+  }
+
+  .walking-step-marker svg {
+    width: 18px;
+    height: 18px;
+    color: hsl(var(--primary));
+    opacity: 0.8;
+  }
+
+  @keyframes walking-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .route-distance-container {
+    background: transparent !important;
+  }
+
+  .route-distance-label {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px hsl(var(--primary) / 0.4);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 2px 8px hsl(var(--primary) / 0.4); }
+    50% { box-shadow: 0 2px 16px hsl(var(--primary) / 0.6); }
+  }
+
   /* Sponsor Map Markers */
   .sponsor-marker-active,
   .sponsor-marker-collected,
