@@ -2,6 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
+import { runMigrations } from 'stripe-replit-sync';
+import { getStripeSync } from "./stripeClient";
+import { WebhookHandlers } from "./webhookHandlers";
+import { startCoinExpirationJob } from "./coinExpirationJob";
 
 const app = express();
 const httpServer = createServer(app);
@@ -11,16 +16,6 @@ declare module "http" {
     rawBody: unknown;
   }
 }
-
-app.use(
-  express.json({
-    verify: (req, _res, buf) => {
-      req.rawBody = buf;
-    },
-  }),
-);
-
-app.use(express.urlencoded({ extended: false }));
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -32,6 +27,90 @@ export function log(message: string, source = "express") {
 
   console.log(`${formattedTime} [${source}] ${message}`);
 }
+
+// Initialize Stripe schema and sync
+async function initStripe() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    console.log('DATABASE_URL not set, skipping Stripe initialization');
+    return;
+  }
+
+  try {
+    console.log('Initializing Stripe schema...');
+    await runMigrations({ 
+      databaseUrl,
+      schema: 'stripe'
+    });
+    console.log('Stripe schema ready');
+
+    const stripeSync = await getStripeSync();
+
+    console.log('Setting up managed webhook...');
+    const domains = process.env.REPLIT_DOMAINS?.split(',') || [];
+    if (domains.length > 0) {
+      try {
+        const webhookBaseUrl = `https://${domains[0]}`;
+        const result = await stripeSync.findOrCreateManagedWebhook(
+          `${webhookBaseUrl}/api/stripe/webhook`
+        );
+        if (result?.webhook?.url) {
+          console.log(`Webhook configured: ${result.webhook.url}`);
+        } else {
+          console.log('Webhook setup completed');
+        }
+      } catch (webhookErr) {
+        console.log('Webhook setup skipped (may need Stripe to be fully configured)');
+      }
+    } else {
+      console.log('Webhook setup skipped (no domain configured)');
+    }
+
+    console.log('Syncing Stripe data...');
+    stripeSync.syncBackfill()
+      .then(() => console.log('Stripe data synced'))
+      .catch((err: Error) => console.error('Error syncing Stripe data:', err));
+  } catch (error) {
+    console.error('Failed to initialize Stripe:', error);
+  }
+}
+
+// Register Stripe webhook route BEFORE express.json()
+app.post(
+  '/api/stripe/webhook',
+  express.raw({ type: 'application/json' }),
+  async (req: Request, res: Response) => {
+    const signature = req.headers['stripe-signature'];
+    if (!signature) {
+      return res.status(400).json({ error: 'Missing stripe-signature' });
+    }
+
+    try {
+      const sig = Array.isArray(signature) ? signature[0] : signature;
+      if (!Buffer.isBuffer(req.body)) {
+        console.error('Stripe webhook: req.body is not a Buffer');
+        return res.status(500).json({ error: 'Webhook processing error' });
+      }
+
+      await WebhookHandlers.processWebhook(req.body as Buffer, sig);
+      res.status(200).json({ received: true });
+    } catch (error: any) {
+      console.error('Webhook error:', error.message);
+      res.status(400).json({ error: 'Webhook processing error' });
+    }
+  }
+);
+
+// Now apply JSON middleware
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
+
+app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -52,6 +131,10 @@ app.use((req, res, next) => {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
+      if (logLine.length > 120) {
+        logLine = logLine.slice(0, 119) + "…";
+      }
+
       log(logLine);
     }
   });
@@ -60,6 +143,16 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize Stripe
+  await initStripe();
+
+  // Setup authentication
+  await setupAuth(app);
+  registerAuthRoutes(app);
+
+  // Start coin expiration job
+  startCoinExpirationJob();
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
