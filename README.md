@@ -1,4 +1,4 @@
-# Give Go - Replit Agent Guide
+# Give Go
 
 ## Overview
 
