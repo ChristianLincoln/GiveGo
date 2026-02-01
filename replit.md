@@ -128,6 +128,10 @@ Key database tables:
 - Implemented theme-aware CSS variables for all map elements (light/dark mode support)
 - Added graceful error handling when no coins available for session start
 - Created seed script (server/seed.ts) with demo sponsor data for testing
+- Enhanced map icons: user location with pulsing ring animation, coins with 3D bounce effect and value display
+- Added role-based theming: teal/cyan for sponsors (#06b6d4), red for players (#dc2644)
+- Added light/dark mode toggle button in header
+- Replaced Stripe checkout with sandboxed mock payment (direct inventory addition for testing)
 
 **Feb 2026 - Initial MVP Complete**
 - Full PWA setup with manifest, service worker, and icons
